@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+frontend/node_modules/
+
+# Build & Dist Outputs
+dist/
+frontend/dist/
+*.egg-info/
+
+# Python Cache & Envs
+__pycache__/
+backend/__pycache__/
+backend/api/__pycache__/
+backend/core/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+
+# IDE & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Logs & Temporary Files
+*.log
+nul

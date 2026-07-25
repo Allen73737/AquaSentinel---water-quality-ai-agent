@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --glass-bg: rgba(7, 14, 28, 0.55);
+    --glass-border: rgba(255, 255, 255, 0.09);
+  }
+
+  html, body, #root {
+    @apply min-h-screen w-full m-0 p-0 font-sans text-slate-200 antialiased bg-[#050914] selection:bg-cyan-500/25 selection:text-cyan-200;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  .font-sans {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  .font-display {
+    font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  }
+
+  .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* ===================== ULTRA-PREMIUM SOLID DARK GLASS TILES ===================== */
+  .periyar-glass-card {
+    background: linear-gradient(135deg, rgba(13, 22, 41, 0.85) 0%, rgba(8, 14, 28, 0.92) 100%);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 
+                inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .periyar-glass-card:hover {
+    border-color: rgba(6, 182, 212, 0.35);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.75), 
+                0 0 30px rgba(6, 182, 212, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .kpi-glass-tile {
+    background: linear-gradient(145deg, rgba(15, 25, 48, 0.75) 0%, rgba(9, 16, 32, 0.85) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 20px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .kpi-glass-tile:hover {
+    background: linear-gradient(145deg, rgba(22, 36, 68, 0.85) 0%, rgba(13, 22, 42, 0.92) 100%);
+    border-color: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 18px 42px rgba(0, 0, 0, 0.55), 
+                0 0 25px rgba(34, 211, 238, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    transform: translateY(-3px);
+  }
+
+  /* Shimmer Glint Overlay */
+  .glint-effect {
+    position: relative;
+    overflow: hidden;
+  }
+  .glint-effect::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent 45%,
+      rgba(255, 255, 255, 0.04) 50%,
+      transparent 55%
+    );
+    transform: rotate(30deg);
+    transition: transform 0.8s ease;
+    pointer-events: none;
+  }
+  .glint-effect:hover::after {
+    transform: rotate(30deg) translate(30%, 30%);
+  }
+
+  /* High Tech Glow Badges */
+  .badge-glow-emerald {
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.25);
+  }
+  .badge-glow-cyan {
+    box-shadow: 0 0 12px rgba(6, 182, 212, 0.25);
+  }
+  .badge-glow-amber {
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.25);
+  }
+  .badge-glow-rose {
+    box-shadow: 0 0 12px rgba(244, 63, 94, 0.25);
+  }
+}
+
+/* Subtle mouse spotlight effect on cards */
+.periyar-glass-card::before,
+.kpi-glass-tile::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    550px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(34, 211, 238, 0.05),
+    transparent 50%
+  ) fixed;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 211, 238, 0.35);
+}
+
+.mask-fade-y {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, black 3%, black 97%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, black 3%, black 97%, transparent);
+}
