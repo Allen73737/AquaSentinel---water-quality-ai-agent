@@ -1,11 +1,22 @@
 import type { LatestTelemetryResponse, SimulationMode, HistoricalReadingEntry } from '../types/telemetry';
 
-export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
+const getCleanApiBaseUrl = (): string => {
+  let url = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api/v1';
+  url = url.trim().replace(/\/+$/, ''); // Remove trailing slashes
+  if (!url.endsWith('/api/v1') && !url.includes('/api/v1')) {
+    url = `${url}/api/v1`;
+  }
+  return url;
+};
+
+export const API_BASE_URL = getCleanApiBaseUrl();
 
 export async function fetchLatestTelemetry(): Promise<LatestTelemetryResponse> {
-  const response = await fetch(`${API_BASE_URL}/telemetry/latest`);
+  const response = await fetch(`${API_BASE_URL}/telemetry/latest`, {
+    headers: { 'Accept': 'application/json' }
+  });
   if (!response.ok) {
-    throw new Error(`API error: ${response.statusText}`);
+    throw new Error(`API error ${response.status}: ${response.statusText}`);
   }
   return response.json();
 }
@@ -13,7 +24,7 @@ export async function fetchLatestTelemetry(): Promise<LatestTelemetryResponse> {
 export async function setSimulationMode(mode: SimulationMode): Promise<void> {
   const response = await fetch(`${API_BASE_URL}/simulation/mode`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify({ mode }),
   });
   if (!response.ok) {
@@ -24,7 +35,7 @@ export async function setSimulationMode(mode: SimulationMode): Promise<void> {
 export async function setManualOverride(nodeId: string, readings: Record<string, number>): Promise<void> {
   const response = await fetch(`${API_BASE_URL}/simulation/override`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify({ node_id: nodeId, readings }),
   });
   if (!response.ok) {
@@ -33,7 +44,9 @@ export async function setManualOverride(nodeId: string, readings: Record<string,
 }
 
 export async function fetchNodeHistory(nodeId: string): Promise<HistoricalReadingEntry[]> {
-  const response = await fetch(`${API_BASE_URL}/nodes/${nodeId}/history`);
+  const response = await fetch(`${API_BASE_URL}/nodes/${nodeId}/history`, {
+    headers: { 'Accept': 'application/json' }
+  });
   if (!response.ok) {
     throw new Error(`Failed to fetch history for ${nodeId}`);
   }
@@ -44,7 +57,7 @@ export async function fetchNodeHistory(nodeId: string): Promise<HistoricalReadin
 export async function dispatchEmergencyAlert(payload: { node_id?: string; urgency?: string; reason?: string }) {
   const response = await fetch(`${API_BASE_URL}/alerts/dispatch`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
     body: JSON.stringify(payload),
   });
   if (!response.ok) {

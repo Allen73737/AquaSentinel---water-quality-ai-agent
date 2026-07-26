@@ -8,7 +8,7 @@ from api.routes import api_bp
 
 def create_app():
     app = Flask(__name__)
-    CORS(app, resources={r"/api/*": {"origins": "*"}})
+    CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
     app.register_blueprint(api_bp)
 
     @app.route('/')
@@ -16,6 +16,7 @@ def create_app():
         return {
             "name": "AquaSentinel Environmental Intelligence API",
             "version": "2.4.0",
+            "status": "OPERATIONAL",
             "river": "Periyar River, Kerala, India",
             "documentation": "/api/v1/status"
         }
