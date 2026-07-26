@@ -13,6 +13,7 @@ import {
   Cpu
 } from 'lucide-react';
 import type { SimulationMode } from '../../types/telemetry';
+import { API_BASE_URL } from '../../api/telemetryService';
 
 const MODE_DEFS: Record<SimulationMode, { 
   label: string; 
@@ -196,7 +197,7 @@ export const SimulationStudio: React.FC = () => {
           <button
             onClick={async () => {
               try {
-                await fetch('http://localhost:5000/api/v1/agent/remediate', {
+                await fetch(`${API_BASE_URL}/agent/remediate`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ strategy: 'AERATION_BARGES' })
@@ -212,7 +213,7 @@ export const SimulationStudio: React.FC = () => {
           <button
             onClick={async () => {
               try {
-                await fetch('http://localhost:5000/api/v1/agent/remediate', {
+                await fetch(`${API_BASE_URL}/agent/remediate`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ strategy: 'CALCIUM_CARBONATE_BUFFER' })
@@ -228,7 +229,7 @@ export const SimulationStudio: React.FC = () => {
           <button
             onClick={async () => {
               try {
-                await fetch('http://localhost:5000/api/v1/agent/remediate', {
+                await fetch(`${API_BASE_URL}/agent/remediate`, {
                   method: 'POST',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ strategy: 'DAM_SPILLWAY_FLUSH' })

@@ -5,6 +5,8 @@ import { useTelemetry } from '../../context/TelemetryContext';
 import { Terminal, ShieldAlert, Cpu, Layers, GitCommit, Sparkles, Send, HelpCircle, CheckCircle2, Maximize2, Minimize2 } from 'lucide-react';
 import type { ConsoleLogEntry, AgentQueryResult } from '../../types/telemetry';
 
+import { API_BASE_URL } from '../../api/telemetryService';
+
 const TYPE_STYLES: Record<string, string> = {
   INFO: 'text-slate-400 font-mono',
   SUCCESS: 'text-emerald-400 font-bold font-mono drop-shadow-[0_0_6px_rgba(16,185,129,0.4)]',
@@ -66,7 +68,7 @@ export const AiConsole: React.FC = () => {
     if (!queryText.trim()) return;
     setIsQuerying(true);
     try {
-      const res = await fetch('http://localhost:5000/api/v1/agent/query', {
+      const res = await fetch(`${API_BASE_URL}/agent/query`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: queryText })
